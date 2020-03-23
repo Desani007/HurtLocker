@@ -25,7 +25,7 @@ public class Main {
 
 
    public ArrayList<GroceryList> itemsToGroceries(String[] strArray){
-       ArrayList<GroceryList>  list = new ArrayList<GroceryList>();
+       ArrayList<GroceryList>  list = new ArrayList();
        String name = "";
        String price = "";
        String food = "";
@@ -48,6 +48,7 @@ public class Main {
             for (int i = 0; i < split.length - 1; i++) {
 
                 if (split[i].equals("name")) {
+                    split[i+1]=split[i+1].replaceAll("[0-9]","o");
                     name = split[i + 1];
                 }
                 if (split[i].equals("price")) {
@@ -68,6 +69,8 @@ public class Main {
         Map nameMap = new HashMap<String,Integer>();
 
         Map priceMap = new HashMap<String,Integer>();
+        Map<String,ArrayList<String>> myMap = new HashMap();
+
 
 
         ArrayList<String> name = new ArrayList<>();
@@ -75,20 +78,30 @@ public class Main {
 
 
         for(GroceryList g :list) {
+
             name.add(g.getName());
             price.add(g.getPrice());
+            myMap.put(g.getName(),price);
+        }
+        for (String k: name) {
+            int num1 = Collections.frequency(name, k);
+            nameMap.put(k, num1);
+
+            for (String s : price) {
+                int num2 = Collections.frequency(price, s);
+                priceMap.put(s, num2);
+
+
+            }
         }
 
-        for (String s: name){
-            int num=Collections.frequency(name,s);
-            nameMap.put(s,num);
-        }
-        for (String s: price){
-            int num=Collections.frequency(price,s);
-            priceMap.put(s,num);
-        }
+
+
+
         System.out.println(nameMap);
         System.out.println(priceMap);
+        System.out.println(myMap);
+
 
     }
 
